@@ -14,7 +14,7 @@
   <div class="sidebar-wrapper">
     <ul class="nav">
       <li class="active">
-        <a href="dashboard.html">
+        <a href="{{route('admin.dashboard')}}">
           <i class="material-icons">dashboard</i>
           <p>Dashboard</p>
         </a>
@@ -27,11 +27,17 @@
         </a>
       </li>
 
-      <li>
-        <a href="table.html">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
           <i class="material-icons">content_paste</i>
-          <p>Table List</p>
-        </a>
+            <span>分类</span><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="{{route('admin.menus.index')}}">主分类</a></li>
+          <li><a href="#">一级分类</a></li>
+          <li><a href="#">二级分类</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
       </li>
 
       <li>

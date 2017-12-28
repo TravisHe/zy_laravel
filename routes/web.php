@@ -19,10 +19,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['middleware'=>'admin'], function(){
-  
+Route::group(['middleware'=>'admin', 'as'=>'admin.'], function(){
+
     Route::get('/zen', function(){
       return view('admin.index');
-    });
+    })->name('dashboard');
+
+    Route::resource('/zen/menus', 'Admin\AdminMenusController');
 
 });

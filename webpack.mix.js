@@ -20,7 +20,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
           ], 'public/css/dashboard.css')
 
     .scripts([
-              'resources/assets/js/adminjs/jquery-3.1.0.min.js',
+              'resources/assets/js/adminjs/jquery-3.2.1.min.js',
               'resources/assets/js/adminjs/bootstrap.min.js',
               'resources/assets/js/adminjs/material.min.js',
               'resources/assets/js/adminjs/bootstrap-notify.js',

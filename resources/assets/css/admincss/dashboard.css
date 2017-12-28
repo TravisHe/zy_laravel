@@ -472,6 +472,22 @@ h2.title {
   line-height: 30px;
   font-size: 14px;
 }
+.sidebar .nav span,
+.off-canvas-sidebar .nav span {
+  margin: 0;
+  line-height: 30px;
+  font-size: 14px;
+}
+.sidebar .nav .caret{
+  position: relative;
+  float: right;
+  margin-top:12px;
+  margin-right:10px;
+}
+.sidebar-wrapper .nav .dropdown .dropdown-menu {
+  width:220px;
+  margin-left:15px;
+}
 .sidebar .nav i,
 .off-canvas-sidebar .nav i {
   font-size: 24px;
