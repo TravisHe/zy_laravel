@@ -1,4 +1,4 @@
-<div class="sidebar" data-color="blue" data-image="{{ asset('/images/dashboard/sidebar-1.jpg') }}">
+<div class="sidebar" data-color="purple" data-image="{{ asset('/images/dashboard/sidebar-1.jpg') }}">
 <!--
       Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -33,7 +33,7 @@
             <span>分类</span><span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="{{route('admin.menus.index')}}">主分类</a></li>
-          <li><a href="#">一级分类</a></li>
+          <li><a href="{{route('admin.maincategories.index')}}">一级分类</a></li>
           <li><a href="#">二级分类</a></li>
           <li role="separator" class="divider"></li>
           <li><a href="#">Separated link</a></li>

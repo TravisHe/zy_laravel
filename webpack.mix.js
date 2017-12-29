@@ -11,8 +11,8 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css')
+//mix.js('resources/assets/js/app.js', 'public/js')
+mix.sass('resources/assets/sass/app.scss', 'public/css')
 
    .styles([
             'resources/assets/css/admincss/bootstrap.min.css',
@@ -26,4 +26,5 @@ mix.js('resources/assets/js/app.js', 'public/js')
               'resources/assets/js/adminjs/bootstrap-notify.js',
               'resources/assets/js/adminjs/material-dashboard.js',
               'resources/assets/js/adminjs/chartist.min.js',
+              'resources/assets/js/adminjs/script.js',
           ], 'public/js/dashboard.js');

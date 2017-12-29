@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 
 use App\Menu;
+
+use App\Http\Requests\AdminMenusRequest;
+use App\Http\Requests;
 
 class AdminMenusController extends Controller
 {
@@ -37,10 +41,10 @@ class AdminMenusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdminMenusRequest $request)
     {
         Menu::create($request->all());
-
+        Session::flash('success', '主分类创建成功。');
         return redirect('/zen/menus');
     }
 
@@ -63,7 +67,9 @@ class AdminMenusController extends Controller
      */
     public function edit($id)
     {
-        //
+        $menu = Menu::findOrFail($id);
+
+        return view('admin.categories.menus.edit', compact('menu'));
     }
 
     /**
@@ -73,9 +79,17 @@ class AdminMenusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AdminMenusRequest $request, $id)
     {
-        //
+        $menu = Menu::findOrFail($id);
+        $menu->update($request->all());
+        $errors = Session::get('errors');
+        if(count($errors)>0){
+          return redirect()->back();
+        } else {
+          Session::flash('info', '主分类修改成功。');
+          return redirect('/zen/menus');
+        }
     }
 
     /**
@@ -86,6 +100,8 @@ class AdminMenusController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Menu::findOrFail($id)->delete();
+        Session::flash('danger', '主分类删除成功。');
+        return redirect('/zen/menus');
     }
 }

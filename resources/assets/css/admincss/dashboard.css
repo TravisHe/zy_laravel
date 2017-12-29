@@ -1431,14 +1431,23 @@ h2.title {
 }
 
 .close {
-  font-size: inherit;
-  color: #FFFFFF;
-  opacity: .9;
-  text-shadow: none;
+  float: right;
+  margin-right:20px;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  filter: alpha(opacity=20);
+  opacity: .6;
 }
-.close:hover, .close:focus {
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  filter: alpha(opacity=50);
   opacity: 1;
-  color: #FFFFFF;
 }
 .close i {
   font-size: 20px;
@@ -2814,7 +2823,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   text-align: center;
 }
 .modal-content .modal-footer button {
-  margin: 0;
+  margin: 3px 5px 0 0;
   padding-left: 16px;
   padding-right: 16px;
   width: auto;
@@ -3581,6 +3590,14 @@ footer .btn {
 .card .card-header .category {
   margin-bottom: 0;
   color: rgba(255, 255, 255, 0.62);
+}
+.card .card-header button {
+  margin-top: -32px;
+  float:right;
+}
+.card .card-header a {
+  margin-top: -32px;
+  float:right;
 }
 .card .card-header.card-chart {
   padding: 0;

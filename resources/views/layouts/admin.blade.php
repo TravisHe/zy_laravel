@@ -20,7 +20,6 @@
 
 <body>
 	<div class="wrapper">
-
     @include('admin_inc/sidebar')
 
     <div class="main-panel">
@@ -34,8 +33,9 @@
 
       @include('admin_inc/footer')
 		</div>
-
 	</div>
+
+  @yield('modal')
 </body>
 
 	<!--   Core JS Files   -->
