@@ -29,4 +29,6 @@ Route::group(['middleware'=>'admin', 'as'=>'admin.'], function(){
 
     Route::resource('/zen/maincategories', 'Admin\AdminMaincategoriesController');
 
+    Route::resource('/zen/subcategories', 'Admin\AdminSubcategoriesController');
+
 });

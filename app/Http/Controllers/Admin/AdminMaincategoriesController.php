@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 
-use App\Maincategory;
 use App\Menu;
+use App\Maincategory;
 
 use App\Http\Requests\AdminMaincategoriesRequest;
 use App\Http\Requests;
@@ -21,7 +21,7 @@ class AdminMaincategoriesController extends Controller
      */
     public function index()
     {
-        $maincategories = Maincategory::all();
+        $maincategories = Maincategory::paginate(8);
         $menus = Menu::all();
 
         return view('admin.categories.maincategories.index', compact('maincategories', 'menus'));

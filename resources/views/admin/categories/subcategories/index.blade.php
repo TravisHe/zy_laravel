@@ -9,16 +9,16 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header" data-background-color="purple">
-          <h4 class="title">一级分类</h4>
+          <h4 class="title">二级分类</h4>
           <span class="category">Here is a subtitle for this table</span>
-          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#adminAddMainCategoryModal">增加一级分类</button>
+          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#adminAddSubCategoryModal">增加二级分类</button>
         </div>
         <div class="card-content table-responsive">
           <table class="table">
             <thead class="text-primary">
               <th>ID</th>
-              <th>图标</th>
               <th>名称</th>
+              <th>所属一级分类</th>
               <th>所属主分类</th>
               <th>简介</th>
               <th>Created_at</th>
@@ -26,17 +26,17 @@
             </thead>
 
             <tbody>
-              @if($maincategories)
-                @foreach($maincategories as $key => $maincategory)
+              @if($subcategories)
+                @foreach($subcategories as $key => $subcategory)
                 <tr>
-                  <td>{{$maincategory->id}}</td>
-                  <td><img src="{{$maincategory->icon ? '/images/icons/'.$maincategory->icon : '/images/icons/placeholder.jpg'}}"
-                                  title="{{$maincategory->name}}.icon" style="width:25px;height:25px;" ></td>
-                  <td class="text-primary"><a href="{{route('admin.maincategories.edit', $maincategory->id)}}">{{$maincategory->name}}</a></td>
-                  <td><a href="{{route('admin.menus.index')}}">{{$maincategory->menu->id}}. {{$maincategory->menu->name}}</a></td>
-                  <td>{{$maincategory->intro}}</td>
-                  <td>{{$maincategory->created_at ? $maincategory->created_at->diffForHumans() : 'No Date'}}</td>
-                  <td>{{$maincategory->updated_at ? $maincategory->updated_at->diffForHumans() : 'No Date'}}</td>
+                  <td>{{$subcategory->id}}</td>
+                  <td class="text-primary"><a href="{{route('admin.subcategories.edit', $subcategory->id)}}">{{$subcategory->name}}</a></td>
+                  <td><a href="{{route('admin.maincategories.index')}}">{{$subcategory->maincategory->name}}</a></td>
+                  <td><a href="{{route('admin.menus.index')}}">{{$subcategory->maincategory->menu->id}}.
+                                                               {{$subcategory->maincategory->menu->name}}</a></td>
+                  <td>{{$subcategory->intro}}</td>
+                  <td>{{$subcategory->created_at ? $subcategory->created_at->diffForHumans() : 'No Date'}}</td>
+                  <td>{{$subcategory->updated_at ? $subcategory->updated_at->diffForHumans() : 'No Date'}}</td>
                 </tr>
                 @endforeach
               @endif
@@ -46,7 +46,7 @@
 
         <div class="row">
           <div class="col-sm-6 col-sm-offset-5">
-            {{$maincategories->render()}}
+            {{$subcategories->render()}}
           </div>
         </div>
       </div>
@@ -57,17 +57,17 @@
 
 @section('modal')
   <!--Admin Maincategory Add Modal -->
-  <div class="modal fade" id="adminAddMainCategoryModal" role="dialog">
+  <div class="modal fade" id="adminAddSubCategoryModal" role="dialog">
     <div class="modal-dialog">
 
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">一级分类</h4>
+          <h4 class="modal-title">二级分类</h4>
         </div>
 
-        {!! Form::open(['method'=>'POST', 'action'=>'Admin\AdminMaincategoriesController@store', 'files'=>true]) !!}
+        {!! Form::open(['method'=>'POST', 'action'=>'Admin\AdminSubcategoriesController@store']) !!}
 
           <div class="modal-body">
               <div class="form-group label-floating">
@@ -81,24 +81,19 @@
               </div>
 
               <div class="form-group">
-                <label class="control-label" for="menu_id">主分类</label>
-                <select class="form-control"  name="menu_id">
-                  <option value ="" selected>请选择主分类</option>
-                  @foreach($menus as $key => $menu)
-                    <option value="{{$menu->id}}">{{$menu->name}}</option>
+                <label class="control-label" for="maincategory_id">一级分类</label>
+                <select class="form-control"  name="maincategory_id">
+                  <option value ="" selected>请选择一级分类</option>
+                  @foreach($maincategories as $key => $maincategory)
+                    <option value="{{$maincategory->id}}">{{$maincategory->name}}</option>
                   @endforeach
                 </select>
-              </div>
-
-              <div>
-                  {!! Form::label('icon', '图标', ['class'=>'control-label']) !!}
-                  {!! Form::file('icon', null, ['class'=>'form-control']) !!}
               </div>
           </div>
 
           <div class="modal-footer">
             <div class="form-group">
-                {!! Form::submit('创建一级分类', ['class'=>'btn btn-primary pull-right']) !!}
+                {!! Form::submit('创建二级分类', ['class'=>'btn btn-primary pull-right']) !!}
             </div>
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
           </div>

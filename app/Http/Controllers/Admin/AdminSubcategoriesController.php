@@ -7,11 +7,13 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 
 use App\Menu;
+use App\Maincategory;
+use App\Subcategory;
 
-use App\Http\Requests\AdminMenusRequest;
+use App\Http\Requests\AdminSubcategoriesRequest;
 use App\Http\Requests;
 
-class AdminMenusController extends Controller
+class AdminSubcategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,8 +23,10 @@ class AdminMenusController extends Controller
     public function index()
     {
         $menus = Menu::all();
+        $maincategories = Maincategory::all();
+        $subcategories = Subcategory::paginate(8);
 
-        return view('admin.categories.menus.index', compact('menus'));
+        return view('admin.categories.subcategories.index', compact('maincategories', 'menus', 'subcategories'));
     }
 
     /**
@@ -41,11 +45,11 @@ class AdminMenusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AdminMenusRequest $request)
+    public function store(AdminSubcategoriesRequest $request)
     {
-        Menu::create($request->all());
+        Subcategory::create($request->all());
         Session::flash('success', '主分类创建成功。');
-        return redirect('/zen/menus');
+        return redirect('/zen/subcategories');
     }
 
     /**
@@ -67,9 +71,10 @@ class AdminMenusController extends Controller
      */
     public function edit($id)
     {
-        $menu = Menu::findOrFail($id);
+        $maincategories = Maincategory::all();
+        $subcategory = Subcategory::findOrFail($id);
 
-        return view('admin.categories.menus.edit', compact('menu'));
+        return view('admin.categories.subcategories.edit', compact('subcategory', 'maincategories'));
     }
 
     /**
@@ -79,16 +84,16 @@ class AdminMenusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminMenusRequest $request, $id)
+    public function update(AdminSubcategoriesRequest $request, $id)
     {
-        $menu = Menu::findOrFail($id);
-        $menu->update($request->all());
+        $subcategory = Subcategory::findOrFail($id);
+        $subcategory->update($request->all());
         $errors = Session::get('errors');
         if(count($errors)>0){
           return redirect()->back();
         } else {
-          Session::flash('info', '主分类修改成功。');
-          return redirect('/zen/menus');
+          Session::flash('info', '二级分类修改成功。');
+          return redirect('/zen/subcategories');
         }
     }
 
@@ -100,8 +105,8 @@ class AdminMenusController extends Controller
      */
     public function destroy($id)
     {
-        Menu::findOrFail($id)->delete();
+        Subcategory::findOrFail($id)->delete();
         Session::flash('success', '主分类删除成功。');
-        return redirect('/zen/menus');
+        return redirect('/zen/subcategories');
     }
 }

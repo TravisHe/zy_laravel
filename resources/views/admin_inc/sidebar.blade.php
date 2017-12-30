@@ -34,7 +34,7 @@
         <ul class="dropdown-menu">
           <li><a href="{{route('admin.menus.index')}}">主分类</a></li>
           <li><a href="{{route('admin.maincategories.index')}}">一级分类</a></li>
-          <li><a href="#">二级分类</a></li>
+          <li><a href="{{route('admin.subcategories.index')}}">二级分类</a></li>
           <li role="separator" class="divider"></li>
           <li><a href="#">Separated link</a></li>
         </ul>
