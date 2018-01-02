@@ -26,9 +26,12 @@ Route::group(['middleware'=>'admin', 'as'=>'admin.'], function(){
     })->name('dashboard');
 
     Route::resource('/zen/menus', 'Admin\AdminMenusController');
-
     Route::resource('/zen/maincategories', 'Admin\AdminMaincategoriesController');
-
     Route::resource('/zen/subcategories', 'Admin\AdminSubcategoriesController');
+
+    Route::get('/zan/users/vip', 'Admin\AdminUsersController@vip')->name('users.vips');
+    Route::get('/zan/users/admin', 'Admin\AdminUsersController@admin')->name('users.admins');
+    Route::resource('/zen/users', 'Admin\AdminUsersController');
+
 
 });

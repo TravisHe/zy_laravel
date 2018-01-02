@@ -20,11 +20,17 @@
         </a>
       </li>
 
-      <li>
-        <a href="user.html">
-          <i class="material-icons">person</i>
-          <p>User Profile</p>
-        </a>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <i class="material-icons">content_paste</i>
+            <span>用户</span><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="{{route('admin.users.index')}}">所有用户</a></li>
+          <li><a href="{{route('admin.users.vips')}}">VIP</a></li>
+          <li><a href="{{route('admin.users.admins')}}">管理员</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
       </li>
 
       <li class="dropdown">
