@@ -10,7 +10,7 @@
         <div class="card-header" data-background-color="purple">
           <h4 class="title">修改·删除 用户</h4>
           <span class="category">Here is a subtitle for this table</span>
-          <a type="button" class="btn btn-info btn-lg" href="{{route('admin.users.index')}}">返回一级分类</a>
+          <a type="button" class="btn btn-info btn-lg" href="{{route('admin.users.index')}}">返回用户界面</a>
         </div>
 
         <div class="col-md-3" align="center">

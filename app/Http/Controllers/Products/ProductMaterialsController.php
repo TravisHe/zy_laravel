@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Products;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 
+use App\ProductMaterial;
 use App\Menu;
 
-use App\Http\Requests\AdminMenusRequest;
+use App\Http\Requests\AdminProductStylesRequest;
 use App\Http\Requests;
 
-class AdminMenusController extends Controller
+class ProductMaterialsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +21,10 @@ class AdminMenusController extends Controller
      */
     public function index()
     {
+        $materials = ProductMaterial::paginate(8);
         $menus = Menu::all();
 
-        return view('admin.categories.menus.index', compact('menus'));
+        return view('admin.products.styles.materials', compact('materials', 'menus'));
     }
 
     /**
@@ -41,11 +43,11 @@ class AdminMenusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AdminMenusRequest $request)
+    public function store(AdminProductStylesRequest $request)
     {
-        Menu::create($request->all());
-        Session::flash('success', '主分类创建成功。');
-        return redirect('/zen/menus');
+        ProductMaterial::create($request->all());
+        Session::flash('success', '材料创建成功。');
+        return redirect('zen/products/materials');
     }
 
     /**
@@ -67,9 +69,10 @@ class AdminMenusController extends Controller
      */
     public function edit($id)
     {
-        $menu = Menu::findOrFail($id);
+        $material = ProductMaterial::findOrFail($id);
+        $menus = Menu::all();
 
-        return view('admin.categories.menus.edit', compact('menu'));
+        return view('admin.products.styles.material_edit', compact('material', 'menus'));
     }
 
     /**
@@ -79,16 +82,16 @@ class AdminMenusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminMenusRequest $request, $id)
+    public function update(AdminProductStylesRequest $request, $id)
     {
-        $menu = Menu::findOrFail($id);
-        $menu->update($request->all());
+        $material = ProductMaterial::findOrFail($id);
+        $material->update($request->all());
         $errors = Session::get('errors');
         if(count($errors)>0){
           return redirect()->back();
         } else {
-          Session::flash('info', '主分类修改成功。');
-          return redirect('/zen/menus');
+          Session::flash('info', '材料修改成功。');
+          return redirect('/zen/products/materials');
         }
     }
 
@@ -100,8 +103,8 @@ class AdminMenusController extends Controller
      */
     public function destroy($id)
     {
-        Menu::findOrFail($id)->delete();
-        Session::flash('danger', '主分类删除成功。');
-        return redirect('/zen/menus');
+        ProductMaterial::findOrFail($id)->delete();
+        Session::flash('danger', '材料删除成功。');
+        return redirect('/zen/products/materials');
     }
 }

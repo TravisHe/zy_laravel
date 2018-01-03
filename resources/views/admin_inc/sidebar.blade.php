@@ -22,7 +22,7 @@
 
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          <i class="material-icons">content_paste</i>
+          <i class="material-icons">person</i>
             <span>用户</span><span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="{{route('admin.users.index')}}">所有用户</a></li>
@@ -46,11 +46,17 @@
         </ul>
       </li>
 
-      <li>
-        <a href="typography.html">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
           <i class="material-icons">library_books</i>
-          <p>Typography</p>
-        </a>
+            <span>产品属性</span><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="{{route('admin.colors.index')}}">编辑颜色</a></li>
+          <li><a href="{{route('admin.sizes.index')}}">编辑尺寸</a></li>
+          <li><a href="{{route('admin.materials.index')}}">编辑材料</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
       </li>
 
       <li>

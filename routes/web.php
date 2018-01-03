@@ -33,5 +33,7 @@ Route::group(['middleware'=>'admin', 'as'=>'admin.'], function(){
     Route::get('/zan/users/admin', 'Admin\AdminUsersController@admin')->name('users.admins');
     Route::resource('/zen/users', 'Admin\AdminUsersController');
 
-
+    Route::resource('/zen/products/colors', 'Products\ProductColorsController');
+    Route::resource('/zen/products/sizes', 'Products\ProductSizesController');
+    Route::resource('/zen/products/materials', 'Products\ProductMaterialsController');
 });
