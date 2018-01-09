@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 
 use App\ProductColor;
+use App\Menu;
 
 class ProductColorsController extends Controller
 {
@@ -18,8 +19,9 @@ class ProductColorsController extends Controller
     public function index()
     {
         $colors = ProductColor::paginate(8);
+        $menus = Menu::all();
 
-        return view('admin.products.styles.colors', compact('colors'));
+        return view('admin.products.styles.colors', compact('colors', 'menus'));
     }
 
     /**
@@ -65,8 +67,9 @@ class ProductColorsController extends Controller
     public function edit($id)
     {
         $color = ProductColor::findOrFail($id);
+        $menus = Menu::all();
 
-        return view('admin.products.styles.color_edit', compact('color'));
+        return view('admin.products.styles.color_edit', compact('color', 'menus'));
     }
 
     /**

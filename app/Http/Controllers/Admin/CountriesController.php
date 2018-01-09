@@ -6,12 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 
+use App\Country;
 use App\Menu;
 
-use App\Http\Requests\AdminMenusRequest;
-use App\Http\Requests;
-
-class AdminMenusController extends Controller
+class CountriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +18,10 @@ class AdminMenusController extends Controller
      */
     public function index()
     {
+        $countries = Country::paginate(8);
         $menus = Menu::all();
 
-        return view('admin.categories.menus.index', compact('menus'));
+        return view('admin.locations.countries', compact('countries', 'menus'));
     }
 
     /**
@@ -41,11 +40,11 @@ class AdminMenusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AdminMenusRequest $request)
+    public function store(Request $request)
     {
-        Menu::create($request->all());
-        Session::flash('success', '主分类创建成功。');
-        return redirect('/zen/menus');
+        Country::create($request->all());
+        Session::flash('success', '国家添加成功。');
+        return redirect('/zen/locations/countries');
     }
 
     /**
@@ -67,10 +66,10 @@ class AdminMenusController extends Controller
      */
     public function edit($id)
     {
-        $menu = Menu::findOrFail($id);
+        $country = Country::findOrFail($id);
         $menus = Menu::all();
 
-        return view('admin.categories.menus.edit', compact('menu', 'menus'));
+        return view('admin.locations.country_edit', compact('country', 'menus'));
     }
 
     /**
@@ -80,16 +79,16 @@ class AdminMenusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminMenusRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $menu = Menu::findOrFail($id);
-        $menu->update($request->all());
+        $country = Country::findOrFail($id);
+        $country->update($request->all());
         $errors = Session::get('errors');
         if(count($errors)>0){
           return redirect()->back();
         } else {
-          Session::flash('info', '主分类修改成功。');
-          return redirect('/zen/menus');
+          Session::flash('info', '国家修改成功。');
+          return redirect('/zen/locations/countries');
         }
     }
 
@@ -101,8 +100,8 @@ class AdminMenusController extends Controller
      */
     public function destroy($id)
     {
-        Menu::findOrFail($id)->delete();
-        Session::flash('danger', '主分类删除成功。');
-        return redirect('/zen/menus');
+        Country::findOrFail($id)->delete();
+        Session::flash('danger', '国家删除成功。');
+        return redirect('/zen/locations/countries');
     }
 }

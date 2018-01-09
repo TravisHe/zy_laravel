@@ -6,12 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 
+use App\Country;
+use App\City;
 use App\Menu;
 
-use App\Http\Requests\AdminMenusRequest;
-use App\Http\Requests;
-
-class AdminMenusController extends Controller
+class CitiesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +19,11 @@ class AdminMenusController extends Controller
      */
     public function index()
     {
+        $cities = City::paginate(8);
+        $countries = Country::all();
         $menus = Menu::all();
 
-        return view('admin.categories.menus.index', compact('menus'));
+        return view('admin.locations.cities', compact('cities', 'countries', 'menus'));
     }
 
     /**
@@ -41,11 +42,11 @@ class AdminMenusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AdminMenusRequest $request)
+    public function store(Request $request)
     {
-        Menu::create($request->all());
-        Session::flash('success', '主分类创建成功。');
-        return redirect('/zen/menus');
+        City::create($request->all());
+        Session::flash('success', '城市添加成功。');
+        return redirect('/zen/locations/cities');
     }
 
     /**
@@ -67,10 +68,11 @@ class AdminMenusController extends Controller
      */
     public function edit($id)
     {
-        $menu = Menu::findOrFail($id);
+        $city = City::findOrFail($id);
+        $countries = Country::all();
         $menus = Menu::all();
 
-        return view('admin.categories.menus.edit', compact('menu', 'menus'));
+        return view('admin.locations.city_edit', compact('city', 'countries', 'menus'));
     }
 
     /**
@@ -80,16 +82,16 @@ class AdminMenusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminMenusRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $menu = Menu::findOrFail($id);
-        $menu->update($request->all());
+        $city = City::findOrFail($id);
+        $city->update($request->all());
         $errors = Session::get('errors');
         if(count($errors)>0){
           return redirect()->back();
         } else {
-          Session::flash('info', '主分类修改成功。');
-          return redirect('/zen/menus');
+          Session::flash('info', '城市修改成功。');
+          return redirect('/zen/locations/cities');
         }
     }
 
@@ -101,8 +103,8 @@ class AdminMenusController extends Controller
      */
     public function destroy($id)
     {
-        Menu::findOrFail($id)->delete();
-        Session::flash('danger', '主分类删除成功。');
-        return redirect('/zen/menus');
+        City::findOrFail($id)->delete();
+        Session::flash('danger', '城市删除成功。');
+        return redirect('/zen/locations/cities');
     }
 }

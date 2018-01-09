@@ -6,23 +6,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 
+use App\Product;
+use App\Manufactor;
 use App\Menu;
 
-use App\Http\Requests\AdminMenusRequest;
-use App\Http\Requests;
-
-class AdminMenusController extends Controller
+class ProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        $products = Product::where('menu_id', $id)->paginate(8);
+        $manufactors = Manufactor::all();
         $menus = Menu::all();
+        $menu = Menu::where('id', $id)->first();
 
-        return view('admin.categories.menus.index', compact('menus'));
+        return view('admin.products.main.index', compact('products', 'manufactors', 'menus', 'menu'));
     }
 
     /**
@@ -41,11 +43,18 @@ class AdminMenusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AdminMenusRequest $request)
+    public function store(Request $request)
     {
-        Menu::create($request->all());
-        Session::flash('success', '主分类创建成功。');
-        return redirect('/zen/menus');
+        $manufactors = Manufactor::all();
+        $menus = Menu::all();
+        $input = $request->all();
+        $menu_id = $request->input('menu_id');
+
+        Product::create($input);
+
+        Session::flash('success', '商品添加成功。');
+
+        return redirect()->route('admin.products_main.index', ['id' => $menu_id]);
     }
 
     /**
@@ -67,10 +76,11 @@ class AdminMenusController extends Controller
      */
     public function edit($id)
     {
-        $menu = Menu::findOrFail($id);
+        $product = Product::findOrFail($id);
+        $manufactors = Manufactor::all();
         $menus = Menu::all();
 
-        return view('admin.categories.menus.edit', compact('menu', 'menus'));
+        return view('admin.products.main.edit', compact('product', 'manufactors', 'menus'));
     }
 
     /**
@@ -80,16 +90,19 @@ class AdminMenusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminMenusRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $menu = Menu::findOrFail($id);
-        $menu->update($request->all());
+        $input = $request->all();
+        $menu_id = $request->input('menu_id');
+        $product = Product::findOrFail($id);
+        $product->update($input);
+
         $errors = Session::get('errors');
         if(count($errors)>0){
           return redirect()->back();
         } else {
-          Session::flash('info', '主分类修改成功。');
-          return redirect('/zen/menus');
+          Session::flash('info', '商品修改成功。');
+          return redirect()->route('admin.products_main.index', ['id' => $menu_id]);
         }
     }
 
@@ -101,8 +114,10 @@ class AdminMenusController extends Controller
      */
     public function destroy($id)
     {
-        Menu::findOrFail($id)->delete();
-        Session::flash('danger', '主分类删除成功。');
-        return redirect('/zen/menus');
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        Session::flash('success', '商品删除成功。');
+        return redirect()->route('admin.products_main.index', ['id' => 1]);
     }
 }

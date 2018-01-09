@@ -21,9 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware'=>'admin', 'as'=>'admin.'], function(){
 
-    Route::get('/zen', function(){
-      return view('admin.index');
-    })->name('dashboard');
+    Route::get('/zen', 'Admin\AdminDashboardController@index')->name('dashboard');
 
     Route::resource('/zen/menus', 'Admin\AdminMenusController');
     Route::resource('/zen/maincategories', 'Admin\AdminMaincategoriesController');
@@ -36,4 +34,15 @@ Route::group(['middleware'=>'admin', 'as'=>'admin.'], function(){
     Route::resource('/zen/products/colors', 'Products\ProductColorsController');
     Route::resource('/zen/products/sizes', 'Products\ProductSizesController');
     Route::resource('/zen/products/materials', 'Products\ProductMaterialsController');
+
+    Route::resource('/zen/locations/countries', 'Admin\CountriesController');
+    Route::resource('/zen/locations/cities', 'Admin\CitiesController');
+    Route::resource('/zen/manufactors', 'Admin\ManufactorController');
+
+    Route::get('/zen/menu/{id}/products', [
+        'as' => 'products_main.index',
+        'uses' => 'Admin\ProductsController@index'
+    ]);
+    Route::resource('zen/products_main', 'Admin\ProductsController', ['except' => 'index']);
+
 });

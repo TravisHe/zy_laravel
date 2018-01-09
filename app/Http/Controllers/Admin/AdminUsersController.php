@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Role;
 use App\UserDetail;
+use App\Menu;
 
 use App\Http\Requests\AdminUsersRequest;
 use App\Http\Requests;
@@ -24,8 +25,9 @@ class AdminUsersController extends Controller
     {
         $users = User::paginate(8);
         $roles = Role::all();
+        $menus = Menu::all();
 
-        return view('admin.users.index', compact('users', 'roles'));
+        return view('admin.users.index', compact('users', 'roles', 'menus'));
     }
 
     /**
@@ -79,10 +81,10 @@ class AdminUsersController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-
         $roles = Role::all();
+        $menus = Menu::all();
 
-        return view('admin.users.edit', compact('user', 'roles'));
+        return view('admin.users.edit', compact('user', 'roles', 'menus'));
     }
 
     /**
@@ -154,13 +156,17 @@ class AdminUsersController extends Controller
     {
         $vips = User::where('role_id', 3)->paginate(8);
         $roles = Role::all();
-        return view('admin.users.vip', compact('vips', 'roles'));
+        $menus = Menu::all();
+
+        return view('admin.users.vip', compact('vips', 'roles', 'menus'));
     }
 
     public function admin()
     {
         $admins = User::where('role_id', 1)->paginate(8);
         $roles = Role::all();
-        return view('admin.users.admin', compact('admins', 'roles'));
+        $menus = Menu::all();
+
+        return view('admin.users.admin', compact('admins', 'roles', 'menus'));
     }
 }

@@ -48,6 +48,19 @@
 
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <i class="material-icons">location_on</i>
+            <span>通用信息</span><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="{{route('admin.countries.index')}}">编辑国家</a></li>
+          <li><a href="{{route('admin.cities.index')}}">编辑城市</a></li>
+          <li><a href="{{route('admin.manufactors.index')}}">制造商</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
           <i class="material-icons">library_books</i>
             <span>产品属性</span><span class="caret"></span></a>
         <ul class="dropdown-menu">
@@ -59,6 +72,19 @@
         </ul>
       </li>
 
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <i class="material-icons">bubble_chart</i>
+            <span>产品Main</span><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          @if($menus)
+            @foreach($menus as $key => $menu)
+            <li><a href="/zen/menu/{{$menu->id}}/products">{{$menu->name}}</a></li>
+            @endforeach
+          @endif
+        </ul>
+      </li>
+
       <li>
         <a href="icons.html">
           <i class="material-icons">bubble_chart</i>
@@ -66,12 +92,7 @@
         </a>
       </li>
 
-      <li>
-        <a href="maps.html">
-          <i class="material-icons">location_on</i>
-          <p>Maps</p>
-        </a>
-      </li>
+
 
       <li>
         <a href="notifications.html">

@@ -73,8 +73,9 @@ class AdminSubcategoriesController extends Controller
     {
         $maincategories = Maincategory::all();
         $subcategory = Subcategory::findOrFail($id);
+        $menus = Menu::all();
 
-        return view('admin.categories.subcategories.edit', compact('subcategory', 'maincategories'));
+        return view('admin.categories.subcategories.edit', compact('subcategory', 'maincategories', 'menus'));
     }
 
     /**
