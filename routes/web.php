@@ -45,4 +45,16 @@ Route::group(['middleware'=>'admin', 'as'=>'admin.'], function(){
     ]);
     Route::resource('zen/products_main', 'Admin\ProductsController', ['except' => 'index']);
 
+    Route::get('/zen/menu/{id}/product_details', [
+        'as' => 'products_detail.products',
+        'uses' => 'Admin\ProductDetailsController@products'
+    ]);
+    Route::resource('zen/products_detail', 'Admin\ProductDetailsController');
+
+    Route::get('/zen/menu/{id}/product_medias', [
+        'as' => 'products_media.products',
+        'uses' => 'Products\ProductMediasController@products'
+    ]);
+    Route::resource('zen/product_medias', 'Products\ProductMediasController');
+
 });

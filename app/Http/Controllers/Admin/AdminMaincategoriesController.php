@@ -97,6 +97,7 @@ class AdminMaincategoriesController extends Controller
         $input = $request->all();
         $maincategory = Maincategory::findOrFail($id);
         if($file = $request->file('icon')) {
+            unlink(public_path() . '/images/icons/' . $maincategory->icon);
             $name = time() . $file->getClientOriginalName();
             $file->move('images/icons', $name);
             $input['icon'] = $name;

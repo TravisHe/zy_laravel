@@ -75,7 +75,7 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
           <i class="material-icons">bubble_chart</i>
-            <span>产品Main</span><span class="caret"></span></a>
+            <span>商品主要信息</span><span class="caret"></span></a>
         <ul class="dropdown-menu">
           @if($menus)
             @foreach($menus as $key => $menu)
@@ -85,20 +85,34 @@
         </ul>
       </li>
 
-      <li>
-        <a href="icons.html">
-          <i class="material-icons">bubble_chart</i>
-          <p>Icons</p>
-        </a>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <i class="material-icons">notifications</i>
+            <span>商品细节内容</span><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="{{route('admin.products_detail.index')}}">所有商品</a></li>
+          <li role="separator" class="divider"></li>
+          @if($menus)
+            @foreach($menus as $key => $menu)
+            <li><a href="/zen/menu/{{$menu->id}}/product_details">{{$menu->name}}</a></li>
+            @endforeach
+          @endif
+        </ul>
       </li>
 
-
-
-      <li>
-        <a href="notifications.html">
-          <i class="material-icons text-gray">notifications</i>
-          <p>Notifications</p>
-        </a>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <i class="material-icons">3d_rotation</i>
+            <span>商品图片资料</span><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="{{route('admin.product_medias.index')}}">所有图片</a></li>
+          <li role="separator" class="divider"></li>
+          @if($menus)
+            @foreach($menus as $key => $menu)
+            <li><a href="/zen/menu/{{$menu->id}}/product_medias">{{$menu->name}}</a></li>
+            @endforeach
+          @endif
+        </ul>
       </li>
 
       <li class="active-pro">

@@ -99,25 +99,17 @@ class AdminUsersController extends Controller
         $user = User::findOrFail($id);
 
         if(trim($request->password) == ''){
-
             $input = $request->except('password');
-
         } else {
-
             $input = $request->all();
-
             $input['password'] = bcrypt($request->password);
-
         }
 
         if($file = $request->file('avatar')){
-
+            unlink(public_path() . '/images/avatars/' . $user->userDetail->avatar);
             $name = time().$file->getClientOriginalName();
-
             $file->move('images/avatars', $name);
-
-            UserDetail::create(['avatar'=>$name, 'user_id'=>$user->id]);
-
+            UserDetail::where('user_id', $user->id)->update(['avatar'=>$name]);
         }
 
         $user->update($input);
