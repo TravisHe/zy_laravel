@@ -57,4 +57,6 @@ Route::group(['middleware'=>'admin', 'as'=>'admin.'], function(){
     ]);
     Route::resource('zen/product_medias', 'Products\ProductMediasController');
 
+    Route::resource('/zen/comments', 'Admin\CommentsController');
+
 });
