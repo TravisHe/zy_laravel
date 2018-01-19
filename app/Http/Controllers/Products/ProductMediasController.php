@@ -132,37 +132,51 @@ class ProductMediasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminProductMediasRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $input = $request->all();
         $product = ProductMedia::findOrFail($id);
 
         if($file = $request->file('media_1')) {
-            unlink(public_path() . '/images/products/show_image/' . $product->media_1);
+            if(!is_null($product->media_1)) {
+                unlink(public_path() . '/images/products/show_image/' . $product->media_1);
+            }
             $name = time() . $file->getClientOriginalName();
             $file->move('images/products/show_image', $name);
             $input['media_1'] = $name;
         }
+
         if($file = $request->file('media_2')) {
-            unlink(public_path() . '/images/products/show_image/' . $product->media_2);
+            if(!is_null($product->media_2)) {
+                unlink(public_path() . '/images/products/show_image/' . $product->media_2);
+            }
             $name = time() . $file->getClientOriginalName();
             $file->move('images/products/show_image', $name);
             $input['media_2'] = $name;
         }
+
         if($file = $request->file('media_3')) {
-            unlink(public_path() . '/images/products/show_image/' . $product->media_3);
+            if(!is_null($product->media_3)) {
+                unlink(public_path() . '/images/products/show_image/' . $product->media_3);
+            }
             $name = time() . $file->getClientOriginalName();
             $file->move('images/products/show_image', $name);
             $input['media_3'] = $name;
         }
+
         if($file = $request->file('media_4')) {
-            unlink(public_path() . '/images/products/show_image/' . $product->media_4);
+            if(!is_null($product->media_4)) {
+                unlink(public_path() . '/images/products/show_image/' . $product->media_4);
+            }
             $name = time() . $file->getClientOriginalName();
             $file->move('images/products/show_image', $name);
             $input['media_4'] = $name;
         }
+
         if($file = $request->file('media_5')) {
-            unlink(public_path() . '/images/products/show_image/' . $product->media_5);
+            if(!is_null($product->media_5)) {
+                unlink(public_path() . '/images/products/show_image/' . $product->media_5);
+            }
             $name = time() . $file->getClientOriginalName();
             $file->move('images/products/show_image', $name);
             $input['media_5'] = $name;

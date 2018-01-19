@@ -33,9 +33,19 @@
         </li>
         <li>
           <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-             <i class="material-icons">person</i>
+             <i class="material-icons">person</i>{{ Auth::user()->name }}
              <p class="hidden-lg hidden-md">Profile</p>
           </a>
+          <ul class="dropdown-menu dropdown-user">
+              <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a></li>
+              <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
+              <li class="divider"></li>
+              <li>
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                  <i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+              </li>
+          </ul>
         </li>
       </ul>
 

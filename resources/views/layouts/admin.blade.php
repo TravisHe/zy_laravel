@@ -40,5 +40,6 @@
 
 	<!--   Core JS Files   -->
 	<script src="{{asset('js/dashboard.js')}}" type="text/javascript"></script>
+	@yield('javascript')
 
 </html>

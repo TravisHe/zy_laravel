@@ -115,11 +115,14 @@
         </ul>
       </li>
 
-      <li class="active-pro">
-        <a href="upgrade.html">
-          <i class="material-icons">unarchive</i>
-          <p>Upgrade to PRO</p>
-        </a>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <i class="material-icons">feedback</i>
+            <span>商品评论</span><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="{{route('admin.comments.index')}}">所有商品评论</a></li>
+          <li><a href="{{route('admin.comment_replies.index')}}">所有评论回复</a></li>
+        </ul>
       </li>
     </ul>
   </div>

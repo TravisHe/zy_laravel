@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 use App\Comment;
 use App\User;
-use App\Product;
 use App\Menu;
+use App\CommentReply;
 
-class CommentsController extends Controller
+class CommentRepliesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,11 +21,9 @@ class CommentsController extends Controller
      */
     public function index()
     {
-        $comments = Comment::paginate(8);;
-        $users = User::all();
-        $products = Product::all();
+        $comment_replies = CommentReply::paginate(8);;
         $menus = Menu::all();
-        return view('admin/comments/index', compact('comments', 'users', 'products', 'menus'));
+        return view('admin/comments/replies', compact('comment_replies', 'menus'));
     }
 
     /**
@@ -45,11 +44,18 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
+        $user = Auth::user();
 
-        Comment::create($input);
+        $data = [
+            'comment_id' => $request->comment_id,
+            'author'     => $user->id,
+            'body'       => $request->body,
+            'is_active'  => $request->is_active,
+        ];
 
-        Session::flash('success', '商品评论添加成功。');
+        CommentReply::create($data);
+
+        Session::flash('success', '评论回复添加成功。');
 
         return redirect()->route('admin.comments.index');
     }
@@ -74,9 +80,9 @@ class CommentsController extends Controller
     public function edit($id)
     {
         $menus = Menu::all();
-        $comment = Comment::findOrFail($id);
+        $comment_reply = CommentReply::findOrFail($id);
 
-        return view('admin/comments/edit', compact('comment', 'menus'));
+        return view('admin/comments/reply_edit', compact('comment_reply', 'menus'));
     }
 
     /**
@@ -89,15 +95,15 @@ class CommentsController extends Controller
     public function update(Request $request, $id)
     {
         $input = $request->all();
-        $comment = Comment::findOrFail($id);
-        $comment->update($input);
+        $comment_reply = CommentReply::findOrFail($id);
+        $comment_reply->update($input);
 
         $errors = Session::get('errors');
         if(count($errors)>0){
           return redirect()->back();
         } else {
-          Session::flash('info', '评论修改成功。');
-          return redirect()->route('admin.comments.index');
+          Session::flash('info', '评论回复修改成功。');
+          return redirect()->route('admin.comment_replies.index');
         }
     }
 
@@ -109,10 +115,10 @@ class CommentsController extends Controller
      */
     public function destroy($id)
     {
-        $comment = Comment::findOrFail($id);
-        $comment->delete();
+        $comment_reply = CommentReply::findOrFail($id);
+        $comment_reply->delete();
 
-        Session::flash('success', '评论删除成功。');
-        return redirect()->route('admin.comments.index');
+        Session::flash('success', '评论回复删除成功。');
+        return redirect()->route('admin.comment_replies.index');
     }
 }

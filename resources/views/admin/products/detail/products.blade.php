@@ -26,6 +26,7 @@
               <th>价格</th>
               <th>Created_at</th>
               <th>Updated_at</th>
+              <th>操作</th>
             </thead>
 
             <tbody>
@@ -33,8 +34,7 @@
                 @foreach($products as $key => $product)
                 <tr>
                   <td>{{$product->id}}</td>
-                  <td class="text-primary"><a href="{{route('admin.products_detail.edit', $product->id)}}">
-                                                    {{$product->name ? $product->name : $product->product->name}}</a></td>
+                  <td class="text-primary">{{$product->name ? $product->name : $product->product->name}}</td>
                   <td class="text-primary"><a href="#">{{$product->product->id}}. {{$product->product->name}}</a></td>
                   <td><a href="{{route('admin.menus.index')}}">{{$product->menu->id}}. {{$product->menu->name}}</a></td>
                   <td><a href="{{route('admin.colors.index')}}">{{$product->color ? $product->color->id .". ".
@@ -46,6 +46,7 @@
                   <td>{{$product->price ? $product->price : 'No Price'}}</td>
                   <td>{{$product->created_at ? $product->created_at->diffForHumans() : 'No Date'}}</td>
                   <td>{{$product->updated_at ? $product->updated_at->diffForHumans() : 'No Date'}}</td>
+                  <td><a class="btn btn-info btn-xs" href="{{route('admin.products_detail.edit', $product->id)}}" role="button">修改</a>
                 </tr>
                 @endforeach
               @endif
@@ -83,7 +84,7 @@
                   {!! Form::label('name', '细节名称(可不写)', ['class'=>'control-label']) !!}
                   {!! Form::text('name', null, ['class'=>'form-control']) !!}
               </div>
-              
+
               <div class="form-group">
                 <label class="control-label" for="product_id">所属商品主要信息</label>
                 <select class="form-control"  name="product_id">

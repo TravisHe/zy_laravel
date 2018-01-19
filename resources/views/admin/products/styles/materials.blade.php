@@ -21,6 +21,7 @@
               <th>主分类</th>
               <th>Created_at</th>
               <th>Updated_at</th>
+              <th>操作</th>
             </thead>
 
             <tbody>
@@ -32,6 +33,7 @@
                   <td><a href="{{route('admin.menus.index')}}">{{$material->menu->id}}. {{$material->menu->name}}</a></td>
                   <td>{{$material->created_at ? $material->created_at->diffForHumans() : 'No Date'}}</td>
                   <td>{{$material->updated_at ? $material->updated_at->diffForHumans() : 'No Date'}}</td>
+                  <td><a class="btn btn-info btn-xs" href="{{route('admin.materials.edit', $material->id)}}" role="button">修改</a>
                 </tr>
                 @endforeach
               @endif

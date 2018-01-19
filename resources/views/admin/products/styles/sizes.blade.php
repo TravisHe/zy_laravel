@@ -21,6 +21,7 @@
               <th>主分类</th>
               <th>Created_at</th>
               <th>Updated_at</th>
+              <th>操作</th>
             </thead>
 
             <tbody>
@@ -32,6 +33,7 @@
                   <td><a href="{{route('admin.menus.index')}}">{{$size->menu->id}}. {{$size->menu->name}}</a></td>
                   <td>{{$size->created_at ? $size->created_at->diffForHumans() : 'No Date'}}</td>
                   <td>{{$size->updated_at ? $size->updated_at->diffForHumans() : 'No Date'}}</td>
+                  <td><a class="btn btn-info btn-xs" href="{{route('admin.sizes.edit', $size->id)}}" role="button">修改</a>
                 </tr>
                 @endforeach
               @endif

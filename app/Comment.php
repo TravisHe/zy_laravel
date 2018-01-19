@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     protected $fillable = [
-        'product_id', 'is_active', 'author', 'email', 'body'
+        'product_id', 'is_active', 'author', 'body'
     ];
 
     public function product() {
@@ -18,8 +18,8 @@ class Comment extends Model
       return $this->belongsTo('App\User', 'author');
     }
 
-    // public function replies(){
-    //   return $this->hasMany('App\CommentReply');
-    // }
+    public function replies(){
+      return $this->hasMany('App\CommentReply');
+    }
 
 }

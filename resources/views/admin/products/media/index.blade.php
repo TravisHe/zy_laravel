@@ -26,6 +26,7 @@
               <th>图片5</th>
               <th>Created_at</th>
               <th>Updated_at</th>
+              <th>操作</th>
             </thead>
 
             <tbody>
@@ -37,18 +38,19 @@
                   <td class="text-primary"><a href="#">{{$product->product->product->id}}. {{$product->product->product->name}}</a></td>
                   <td><a href="{{route('admin.products_detail.index')}}">{{is_null($product->product->name) ? $product->product->product->id
                                .". ". $product->product->product->name : $product->product->id .". ". $product->product->name}}</a></td>
-                  <td><a href="{{route('admin.product_medias.edit', $product->id)}}"><img src="{{$product->media_1 ? '/images/products/show_image/'.$product->media_1 :
-                                                      '/images/products/show_image/null.png'}}" style="width:40px;height:40px;" ></a></td>
-                  <td><a href="{{route('admin.product_medias.edit', $product->id)}}"><img src="{{$product->media_2 ? '/images/products/show_image/'.$product->media_2 :
-                                                      '/images/products/show_image/null.png'}}" style="width:40px;height:40px;" ></a></td>
-                  <td><a href="{{route('admin.product_medias.edit', $product->id)}}"><img src="{{$product->media_3 ? '/images/products/show_image/'.$product->media_3 :
-                                                      '/images/products/show_image/null.png'}}" style="width:40px;height:40px;" ></a></td>
-                  <td><a href="{{route('admin.product_medias.edit', $product->id)}}"><img src="{{$product->media_4 ? '/images/products/show_image/'.$product->media_4 :
-                                                      '/images/products/show_image/null.png'}}" style="width:40px;height:40px;" ></a></td>
-                  <td><a href="{{route('admin.product_medias.edit', $product->id)}}"><img src="{{$product->media_5 ? '/images/products/show_image/'.$product->media_5 :
-                                                      '/images/products/show_image/null.png'}}" style="width:40px;height:40px;" ></a></td>
+                  <td><img src="{{$product->media_1 ? '/images/products/show_image/'.$product->media_1 : '/images/products/show_image/null.png'}}"
+                                                  style="width:40px;height:40px;" ></td>
+                  <td><img src="{{$product->media_2 ? '/images/products/show_image/'.$product->media_2 : '/images/products/show_image/null.png'}}"
+                                                  style="width:40px;height:40px;" ></a></td>
+                  <td><img src="{{$product->media_3 ? '/images/products/show_image/'.$product->media_3 : '/images/products/show_image/null.png'}}"
+                                                  style="width:40px;height:40px;" ></a></td>
+                  <td><img src="{{$product->media_4 ? '/images/products/show_image/'.$product->media_4 : '/images/products/show_image/null.png'}}"
+                                                  style="width:40px;height:40px;" ></a></td>
+                  <td><img src="{{$product->media_5 ? '/images/products/show_image/'.$product->media_5 : '/images/products/show_image/null.png'}}"
+                                                  style="width:40px;height:40px;" ></a></td>
                   <td>{{$product->created_at ? $product->created_at->diffForHumans() : 'No Date'}}</td>
                   <td>{{$product->updated_at ? $product->updated_at->diffForHumans() : 'No Date'}}</td>
+                  <td><a class="btn btn-info btn-xs" href="{{route('admin.product_medias.edit', $product->id)}}" role="button">修改</a>
                 </tr>
                 @endforeach
               @endif

@@ -21,6 +21,7 @@
               <th>名称</th>
               <th>Created_at</th>
               <th>Updated_at</th>
+              <th>操作</th>
             </thead>
 
             <tbody>
@@ -33,6 +34,7 @@
                   <td class="text-primary"><a href="{{route('admin.colors.edit', $color->id)}}">{{$color->name}}</a></td>
                   <td>{{$color->created_at ? $color->created_at->diffForHumans() : 'No Date'}}</td>
                   <td>{{$color->updated_at ? $color->updated_at->diffForHumans() : 'No Date'}}</td>
+                  <td><a class="btn btn-info btn-xs" href="{{route('admin.colors.edit', $color->id)}}" role="button">修改</a>
                 </tr>
                 @endforeach
               @endif

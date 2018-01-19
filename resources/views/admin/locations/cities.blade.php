@@ -21,6 +21,7 @@
               <th>所属国家</th>
               <th>Created_at</th>
               <th>Updated_at</th>
+              <th>操作</th>
             </thead>
 
             <tbody>
@@ -36,6 +37,7 @@
                   @endif
                   <td>{{$city->created_at ? $city->created_at->diffForHumans() : 'No Date'}}</td>
                   <td>{{$city->updated_at ? $city->updated_at->diffForHumans() : 'No Date'}}</td>
+                  <td><a class="btn btn-info btn-xs" href="{{route('admin.cities.edit', $city->id)}}" role="button">修改</a>
                 </tr>
                 @endforeach
               @endif

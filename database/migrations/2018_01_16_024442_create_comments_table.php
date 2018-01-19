@@ -18,7 +18,6 @@ class CreateCommentsTable extends Migration
             $table->integer('product_id')->unsigned()->index();
             $table->integer('is_active')->default(1);
             $table->string('author');
-            $table->string('email')->nullable();
             $table->text('body');
             $table->timestamps();
 

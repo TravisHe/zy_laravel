@@ -10,7 +10,7 @@
         <div class="card-header" data-background-color="purple">
           <h4 class="title">修改·删除 图片资料</h4>
           <span class="category">Here is a subtitle for this table</span>
-          <a type="button" class="btn btn-info btn-lg" href="{{ URL::previous() }}">返回</a>
+          <a type="button" class="btn btn-info btn-lg" href="{{route('admin.product_medias.index')}}">返回</a>
         </div>
 
         <div class="col-sm-3"></div>

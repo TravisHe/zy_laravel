@@ -19,6 +19,7 @@
               <th>Name</th>
               <th>Created_at</th>
               <th>Updated_at</th>
+              <th>操作</th>
             </thead>
 
             <tbody>
@@ -29,6 +30,7 @@
                   <td class="text-primary"><a href="{{route('admin.countries.edit', $country->id)}}">{{$country->name}}</a></td>
                   <td>{{$country->created_at ? $country->created_at->diffForHumans() : 'No Date'}}</td>
                   <td>{{$country->updated_at ? $country->updated_at->diffForHumans() : 'No Date'}}</td>
+                  <td><a class="btn btn-info btn-xs" href="{{route('admin.countries.edit', $country->id)}}" role="button">修改</a>
                 </tr>
                 @endforeach
               @endif

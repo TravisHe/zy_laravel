@@ -25,6 +25,7 @@
               <th>phone</th>
               <th>Created_at</th>
               <th>Updated_at</th>
+              <th>操作</th>
             </thead>
 
             <tbody>
@@ -42,6 +43,7 @@
                   <td>{{$manufactor->phone ? $manufactor->phone : 'No Phone'}}</td>
                   <td>{{$manufactor->created_at ? $manufactor->created_at->diffForHumans() : 'No Date'}}</td>
                   <td>{{$manufactor->updated_at ? $manufactor->updated_at->diffForHumans() : 'No Date'}}</td>
+                  <td><a class="btn btn-info btn-xs" href="{{route('admin.manufactors.edit', $manufactor->id)}}" role="button">修改</a>
                 </tr>
                 @endforeach
               @endif

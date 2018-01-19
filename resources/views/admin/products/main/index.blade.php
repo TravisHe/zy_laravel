@@ -24,6 +24,7 @@
               <th>收藏量</th>
               <th>Created_at</th>
               <th>Updated_at</th>
+              <th>操作</th>
             </thead>
 
             <tbody>
@@ -38,6 +39,7 @@
                   <td>{{$product->collects ? $product->collects : 0}}</td>
                   <td>{{$product->created_at ? $product->created_at->diffForHumans() : 'No Date'}}</td>
                   <td>{{$product->updated_at ? $product->updated_at->diffForHumans() : 'No Date'}}</td>
+                  <td><a class="btn btn-info btn-xs" href="{{route('admin.products_main.edit', $product->id)}}" role="button">修改</a>
                 </tr>
                 @endforeach
               @endif
