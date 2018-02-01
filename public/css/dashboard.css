@@ -698,6 +698,7 @@ h2.title {
   will-change: box-shadow, transform;
   transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .btn::-moz-focus-inner,
 .navbar .navbar-nav > li > a.btn::-moz-focus-inner {
   border: 0;
@@ -1334,6 +1335,7 @@ h2.title {
 .navbar .navbar-nav > li > a.btn {
   padding: 4px 15px;
   font-size: 10px;
+  margin: 1px;
 }
 .btn.btn-just-icon,
 .navbar .navbar-nav > li > a.btn.btn-just-icon {

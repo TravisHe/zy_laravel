@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\ProductMaterial;
 use App\Menu;
+use App\Role;
 
 use App\Http\Requests\AdminProductStylesRequest;
 use App\Http\Requests;
@@ -23,8 +24,9 @@ class ProductMaterialsController extends Controller
     {
         $materials = ProductMaterial::paginate(8);
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.products.styles.materials', compact('materials', 'menus'));
+        return view('admin.products.styles.materials', compact('materials', 'menus', 'roles'));
     }
 
     /**
@@ -47,7 +49,7 @@ class ProductMaterialsController extends Controller
     {
         ProductMaterial::create($request->all());
         Session::flash('success', '材料创建成功。');
-        return redirect('zen/products/materials');
+        return redirect()->route('admin.materials.index');
     }
 
     /**
@@ -71,8 +73,9 @@ class ProductMaterialsController extends Controller
     {
         $material = ProductMaterial::findOrFail($id);
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.products.styles.material_edit', compact('material', 'menus'));
+        return view('admin.products.styles.material_edit', compact('material', 'menus', 'roles'));
     }
 
     /**
@@ -91,7 +94,7 @@ class ProductMaterialsController extends Controller
           return redirect()->back();
         } else {
           Session::flash('info', '材料修改成功。');
-          return redirect('/zen/products/materials');
+          return redirect()->route('admin.materials.index');
         }
     }
 
@@ -105,6 +108,6 @@ class ProductMaterialsController extends Controller
     {
         ProductMaterial::findOrFail($id)->delete();
         Session::flash('danger', '材料删除成功。');
-        return redirect('/zen/products/materials');
+        return redirect()->route('admin.materials.index');
     }
 }

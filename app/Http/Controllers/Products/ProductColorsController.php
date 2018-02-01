@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\ProductColor;
 use App\Menu;
+use App\Role;
 
 class ProductColorsController extends Controller
 {
@@ -20,8 +21,9 @@ class ProductColorsController extends Controller
     {
         $colors = ProductColor::paginate(8);
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.products.styles.colors', compact('colors', 'menus'));
+        return view('admin.products.styles.colors', compact('colors', 'menus', 'roles'));
     }
 
     /**
@@ -44,7 +46,7 @@ class ProductColorsController extends Controller
     {
         ProductColor::create($request->all());
         Session::flash('success', '颜色创建成功。');
-        return redirect('zen/products/colors');
+        return redirect()->route('admin.colors.index');
     }
 
     /**
@@ -68,8 +70,9 @@ class ProductColorsController extends Controller
     {
         $color = ProductColor::findOrFail($id);
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.products.styles.color_edit', compact('color', 'menus'));
+        return view('admin.products.styles.color_edit', compact('color', 'menus', 'roles'));
     }
 
     /**
@@ -88,7 +91,7 @@ class ProductColorsController extends Controller
           return redirect()->back();
         } else {
           Session::flash('info', '颜色修改成功。');
-          return redirect('/zen/products/colors');
+          return redirect()->route('admin.colors.index');
         }
     }
 
@@ -102,6 +105,6 @@ class ProductColorsController extends Controller
     {
         ProductColor::findOrFail($id)->delete();
         Session::flash('danger', '颜色删除成功。');
-        return redirect('/zen/products/colors');
+        return redirect()->route('admin.colors.index');
     }
 }

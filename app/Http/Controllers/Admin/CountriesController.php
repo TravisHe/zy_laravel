@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\Country;
 use App\Menu;
+use App\Role;
 
 class CountriesController extends Controller
 {
@@ -20,8 +21,9 @@ class CountriesController extends Controller
     {
         $countries = Country::paginate(8);
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.locations.countries', compact('countries', 'menus'));
+        return view('admin.locations.countries', compact('countries', 'menus', 'roles'));
     }
 
     /**
@@ -44,7 +46,7 @@ class CountriesController extends Controller
     {
         Country::create($request->all());
         Session::flash('success', '国家添加成功。');
-        return redirect('/zen/locations/countries');
+        return redirect()->route('admin.countries.index');
     }
 
     /**
@@ -68,8 +70,9 @@ class CountriesController extends Controller
     {
         $country = Country::findOrFail($id);
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.locations.country_edit', compact('country', 'menus'));
+        return view('admin.locations.country_edit', compact('country', 'menus', 'roles'));
     }
 
     /**
@@ -88,7 +91,7 @@ class CountriesController extends Controller
           return redirect()->back();
         } else {
           Session::flash('info', '国家修改成功。');
-          return redirect('/zen/locations/countries');
+          return redirect()->route('admin.countries.index');
         }
     }
 
@@ -102,6 +105,6 @@ class CountriesController extends Controller
     {
         Country::findOrFail($id)->delete();
         Session::flash('danger', '国家删除成功。');
-        return redirect('/zen/locations/countries');
+        return redirect()->route('admin.countries.index');
     }
 }

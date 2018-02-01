@@ -10,6 +10,7 @@ use App\City;
 use App\Country;
 use App\Manufactor;
 use App\Menu;
+use App\Role;
 
 use App\Http\Requests\AdminManufactorsRequest;
 use App\Http\Requests;
@@ -27,8 +28,9 @@ class ManufactorController extends Controller
         $countries = Country::all();
         $cities = City::all();
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.general.manufactor', compact('manufactors', 'countries', 'cities', 'menus'));
+        return view('admin.general.manufactor', compact('manufactors', 'countries', 'cities', 'menus', 'roles'));
     }
 
     /**
@@ -61,7 +63,7 @@ class ManufactorController extends Controller
 
         Session::flash('success', '制造商信息添加成功。');
 
-        return redirect('/zen/manufactors');
+        return redirect()->route('admin.manufactors.index');
     }
 
     /**
@@ -87,8 +89,9 @@ class ManufactorController extends Controller
         $cities = City::all();
         $manufactor = Manufactor::findOrFail($id);
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.general.manufactor_edit', compact('manufactor', 'cities', 'countries', 'menus'));
+        return view('admin.general.manufactor_edit', compact('manufactor', 'cities', 'countries', 'menus', 'roles'));
     }
 
     /**
@@ -103,6 +106,9 @@ class ManufactorController extends Controller
         $input = $request->all();
         $manufactor = Manufactor::findOrFail($id);
         if($file = $request->file('logo')) {
+            if(!is_null($manufactor->logo)) {
+                unlink(public_path() . '/images/manufactors/logo/' . $manufactor->logo);
+            }
             $name = time() . $file->getClientOriginalName();
             $file->move('images/manufactors/logo', $name);
             $input['logo'] = $name;
@@ -113,7 +119,7 @@ class ManufactorController extends Controller
           return redirect()->back();
         } else {
           Session::flash('info', '制造商修改成功。');
-          return redirect('/zen/manufactors');
+          return redirect()->route('admin.manufactors.index');
         }
     }
 
@@ -133,6 +139,6 @@ class ManufactorController extends Controller
 
         Session::flash('success', '制造商删除成功。');
 
-        return redirect('/zen/manufactors');
+        return redirect()->route('admin.manufactors.index');
     }
 }

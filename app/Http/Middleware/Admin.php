@@ -16,9 +16,9 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-      if(Auth::check()){
+      if(Auth::guard('admin')->check()){
 
-         if(Auth::user()->isAdmin()){
+         if(Auth::guard('admin')->user()->isActive()){
 
             return $next($request);
 
@@ -26,6 +26,6 @@ class Admin
 
       }
 
-      return redirect('/home');
+      return redirect()->route('admin.home');
     }
 }

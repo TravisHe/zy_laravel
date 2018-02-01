@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\ProductMedia;
 use App\ProductDetail;
 use App\Menu;
+use App\Role;
 
 use App\Http\Requests\AdminProductMediasRequest;
 use App\Http\Requests;
@@ -25,8 +26,9 @@ class ProductMediasController extends Controller
         $product_media = ProductMedia::paginate(8);
         $products = ProductDetail::all();
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.products.media.index', compact('products', 'menus', 'product_media'));
+        return view('admin.products.media.index', compact('products', 'menus', 'product_media', 'roles'));
     }
 
     /**
@@ -37,9 +39,10 @@ class ProductMediasController extends Controller
         $product_media = ProductMedia::where('menu_id', $id)->paginate(8);
         $products = ProductDetail::where('menu_id', $id)->get();
         $menus = Menu::all();
+        $roles = Role::all();
         $menu = Menu::where('id', $id)->first();
 
-        return view('admin.products.media.products', compact('products', 'menus', 'product_media', 'menu'));
+        return view('admin.products.media.products', compact('products', 'menus', 'product_media', 'menu', 'roles'));
     }
 
     /**
@@ -119,10 +122,11 @@ class ProductMediasController extends Controller
         $product = ProductMedia::findOrFail($id);
         $product_id = $product->id;
         $menus = Menu::all();
+        $roles = Role::all();
         $menu_id = $product->menu->id;
         $products_main = ProductDetail::where('menu_id', $menu_id)->get();
 
-        return view('admin.products.media.edit', compact('product', 'products_main', 'menus', 'product_id'));
+        return view('admin.products.media.edit', compact('product', 'products_main', 'menus', 'product_id', 'roles'));
     }
 
     /**

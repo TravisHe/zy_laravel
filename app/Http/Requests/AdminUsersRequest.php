@@ -24,8 +24,8 @@ class AdminUsersRequest extends FormRequest
     public function rules()
     {
         return [
-          'name'=>'required',
-          'email'=>'required',
+          'name'=>'required|unique:users,name|max:20',
+          'email'=>'required|unique:users,email|email',
           'role_id'=>'required',
           'is_active'=>'required',
           'password'=>'required'

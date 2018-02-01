@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\ProductSize;
 use App\Menu;
+use App\Role;
 
 use App\Http\Requests\AdminProductStylesRequest;
 use App\Http\Requests;
@@ -23,8 +24,9 @@ class ProductSizesController extends Controller
     {
         $sizes = ProductSize::paginate(8);
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.products.styles.sizes', compact('sizes', 'menus'));
+        return view('admin.products.styles.sizes', compact('sizes', 'menus', 'roles'));
     }
 
     /**
@@ -47,7 +49,7 @@ class ProductSizesController extends Controller
     {
         ProductSize::create($request->all());
         Session::flash('success', '尺寸创建成功。');
-        return redirect('zen/products/sizes');
+        return redirect()->route('admin.sizes.index');
     }
 
     /**
@@ -71,8 +73,9 @@ class ProductSizesController extends Controller
     {
         $size = ProductSize::findOrFail($id);
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.products.styles.size_edit', compact('size', 'menus'));
+        return view('admin.products.styles.size_edit', compact('size', 'menus', 'roles'));
     }
 
     /**
@@ -91,7 +94,7 @@ class ProductSizesController extends Controller
           return redirect()->back();
         } else {
           Session::flash('info', '尺寸修改成功。');
-          return redirect('/zen/products/sizes');
+          return redirect()->route('admin.sizes.index');
         }
     }
 
@@ -105,6 +108,6 @@ class ProductSizesController extends Controller
     {
         ProductSize::findOrFail($id)->delete();
         Session::flash('danger', '尺寸删除成功。');
-        return redirect('/zen/products/sizes');
+        return redirect()->route('admin.sizes.index');
     }
 }

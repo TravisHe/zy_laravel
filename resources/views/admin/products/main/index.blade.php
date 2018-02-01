@@ -9,7 +9,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header" data-background-color="purple">
-          <h4 class="title">{{$menu->name}}的所有商品</h4>
+          <h4 class="title">所有商品</h4>
           <span class="category">Here is a subtitle for this table</span>
           <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#adminAddProductModal">添加商品</button>
         </div>

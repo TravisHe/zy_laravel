@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Menu;
 use App\Maincategory;
 use App\Subcategory;
+use App\Role;
 
 use App\Http\Requests\AdminSubcategoriesRequest;
 use App\Http\Requests;
@@ -23,10 +24,11 @@ class AdminSubcategoriesController extends Controller
     public function index()
     {
         $menus = Menu::all();
+        $roles = Role::all();
         $maincategories = Maincategory::all();
         $subcategories = Subcategory::paginate(8);
 
-        return view('admin.categories.subcategories.index', compact('maincategories', 'menus', 'subcategories'));
+        return view('admin.categories.subcategories.index', compact('maincategories', 'menus', 'subcategories', 'roles'));
     }
 
     /**
@@ -49,7 +51,7 @@ class AdminSubcategoriesController extends Controller
     {
         Subcategory::create($request->all());
         Session::flash('success', '主分类创建成功。');
-        return redirect('/zen/subcategories');
+        return redirect()->route('admin.subcategories.index');
     }
 
     /**
@@ -74,8 +76,9 @@ class AdminSubcategoriesController extends Controller
         $maincategories = Maincategory::all();
         $subcategory = Subcategory::findOrFail($id);
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.categories.subcategories.edit', compact('subcategory', 'maincategories', 'menus'));
+        return view('admin.categories.subcategories.edit', compact('subcategory', 'maincategories', 'menus', 'roles'));
     }
 
     /**
@@ -94,7 +97,7 @@ class AdminSubcategoriesController extends Controller
           return redirect()->back();
         } else {
           Session::flash('info', '二级分类修改成功。');
-          return redirect('/zen/subcategories');
+          return redirect()->route('admin.subcategories.index');
         }
     }
 
@@ -108,6 +111,6 @@ class AdminSubcategoriesController extends Controller
     {
         Subcategory::findOrFail($id)->delete();
         Session::flash('success', '主分类删除成功。');
-        return redirect('/zen/subcategories');
+        return redirect()->route('admin.subcategories.index');
     }
 }

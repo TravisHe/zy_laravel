@@ -10,6 +10,7 @@ use App\Comment;
 use App\User;
 use App\Product;
 use App\Menu;
+use App\Role;
 
 class CommentsController extends Controller
 {
@@ -24,7 +25,8 @@ class CommentsController extends Controller
         $users = User::all();
         $products = Product::all();
         $menus = Menu::all();
-        return view('admin/comments/index', compact('comments', 'users', 'products', 'menus'));
+        $roles = Role::all();
+        return view('admin/comments/index', compact('comments', 'users', 'products', 'menus', 'roles'));
     }
 
     /**
@@ -74,9 +76,10 @@ class CommentsController extends Controller
     public function edit($id)
     {
         $menus = Menu::all();
+        $roles = Role::all();
         $comment = Comment::findOrFail($id);
 
-        return view('admin/comments/edit', compact('comment', 'menus'));
+        return view('admin/comments/edit', compact('comment', 'menus', 'roles'));
     }
 
     /**

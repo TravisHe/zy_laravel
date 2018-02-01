@@ -9,8 +9,8 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header" data-background-color="purple">
-          <h4 class="title">所有管理员</h4>
-          <span class="category">Here is a subtitle for this table</span>
+          <h4 class="title">所有 <strong>{{$role->name}}</strong> 用户</h4>
+          <span class="category">所有认证身份为<strong>{{$role->name}}</strong>的用户</span>
           <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#adminAddUserModal">增加用户</button>
         </div>
         <div class="card-content table-responsive">
@@ -27,8 +27,8 @@
             </thead>
 
             <tbody>
-              @if($admins)
-                @foreach($admins as $key => $user)
+              @if($users)
+                @foreach($users as $key => $user)
                 <tr>
                   <td>{{$user->id}}</td>
                   <td><img src="{{$user->userDetail ? '/images/avatars/'.$user->userDetail->avatar : '/images/avatars/placeholder.jpg'}}"
@@ -48,7 +48,7 @@
 
         <div class="row">
           <div class="col-sm-6 col-sm-offset-5">
-            {{$admins->render()}}
+            {{$users->render()}}
           </div>
         </div>
       </div>

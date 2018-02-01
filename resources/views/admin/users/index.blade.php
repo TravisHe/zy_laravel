@@ -106,6 +106,11 @@
                   <option value ="1">激活</option>
                 </select>
               </div>
+
+              <div>
+                  {!! Form::label('avatar', '头像', ['class'=>'control-label']) !!}
+                  {!! Form::file('avatar', null, ['class'=>'form-control']) !!}
+              </div>
           </div>
 
           <div class="modal-footer">

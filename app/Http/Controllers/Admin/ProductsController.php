@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use App\Manufactor;
 use App\Menu;
+use App\Role;
 
 class ProductsController extends Controller
 {
@@ -17,14 +18,30 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
+    {
+        $products = Product::paginate(8);
+        $manufactors = Manufactor::all();
+        $menus = Menu::all();
+        $roles = Role::all();
+
+        return view('admin.products.main.index', compact('products', 'manufactors', 'menus', 'roles'));
+    }
+
+    /**
+     * Display products under specific menu.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function products($id)
     {
         $products = Product::where('menu_id', $id)->paginate(8);
         $manufactors = Manufactor::all();
         $menus = Menu::all();
+        $roles = Role::all();
         $menu = Menu::where('id', $id)->first();
 
-        return view('admin.products.main.index', compact('products', 'manufactors', 'menus', 'menu'));
+        return view('admin.products.main.products', compact('products', 'manufactors', 'menus', 'menu', 'roles'));
     }
 
     /**
@@ -79,6 +96,7 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
         $manufactors = Manufactor::all();
         $menus = Menu::all();
+        $roles = Role::all();
 
         return view('admin.products.main.edit', compact('product', 'manufactors', 'menus'));
     }

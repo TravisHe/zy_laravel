@@ -37,7 +37,7 @@
             </div>
 
             <div class="form-group">
-              <label class="control-label" for="role_id">主分类</label>
+              <label class="control-label" for="role_id">身份</label>
               <select class="form-control"  name="role_id">
                 <option value ="{{$user->role->id}}" selected>{{$user->role->name}}</option>
                 @foreach($roles as $key => $role)

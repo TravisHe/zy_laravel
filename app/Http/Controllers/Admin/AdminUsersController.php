@@ -31,6 +31,19 @@ class AdminUsersController extends Controller
     }
 
     /**
+     * Display users details depends on defferent roles
+     */
+    public function roles($id)
+    {
+        $users = User::where('role_id', $id)->paginate(8);
+        $menus = Menu::all();
+        $roles = Role::all();
+        $role = Role::where('id', $id)->first();
+
+        return view('admin.users.roles', compact('users', 'menus', 'roles', 'role'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -48,17 +61,24 @@ class AdminUsersController extends Controller
      */
     public function store(AdminUsersRequest $request)
     {
-        $roles = Role::all();
-
         $input = $request->all();
 
         $input['password'] = bcrypt($request->password);
+
+        if($file = $request->file('avatar')){
+            $name = time().$file->getClientOriginalName();
+            $file->move('images/avatars', $name);
+            $user_detail = new UserDetail;
+            $user_detail->user_id = $user->id;
+            $user_detail->avatar = $name;
+            $user_detail->save();
+        }
 
         User::create($input);
 
         Session::flash('success', '用户创建成功。');
 
-        return redirect('/zen/users');
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -106,17 +126,30 @@ class AdminUsersController extends Controller
         }
 
         if($file = $request->file('avatar')){
-            unlink(public_path() . '/images/avatars/' . $user->userDetail->avatar);
-            $name = time().$file->getClientOriginalName();
-            $file->move('images/avatars', $name);
-            UserDetail::where('user_id', $user->id)->update(['avatar'=>$name]);
+            if(isset($user->userDetail->avatar) && !is_null($user->userDetail->avatar)) {
+                unlink(public_path() . '/images/avatars/' . $user->userDetail->avatar);
+                $name = time().$file->getClientOriginalName();
+                $file->move('images/avatars', $name);
+                UserDetail::where('user_id', $user->id)->update(['avatar'=>$name]);
+            } else if(isset($user->userDetail->avatar) && is_null($user->userDetail->avatar)) {
+                $name = time().$file->getClientOriginalName();
+                $file->move('images/avatars', $name);
+                UserDetail::where('user_id', $user->id)->update(['avatar'=>$name]);
+            } else {
+                $name = time().$file->getClientOriginalName();
+                $file->move('images/avatars', $name);
+                $user_detail = new UserDetail;
+                $user_detail->user_id = $user->id;
+                $user_detail->avatar = $name;
+                $user_detail->save();
+            }
         }
 
         $user->update($input);
 
-        Session::flash('updated_user', 'The user has been updated.');
+        Session::flash('success', 'The user has been updated.');
 
-        return redirect('/zen/users');
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -139,26 +172,9 @@ class AdminUsersController extends Controller
             unlink(public_path() . '/images/avatars/' . $user->userDetail->avatar);
         }
 
-        Session::flash('deleted_user', 'The user has been deleted.');
+        Session::flash('danger', 'The user has been deleted.');
 
-        return redirect('/zen/users');
+        return redirect()->route('admin.users.index');
     }
 
-    public function vip()
-    {
-        $vips = User::where('role_id', 3)->paginate(8);
-        $roles = Role::all();
-        $menus = Menu::all();
-
-        return view('admin.users.vip', compact('vips', 'roles', 'menus'));
-    }
-
-    public function admin()
-    {
-        $admins = User::where('role_id', 1)->paginate(8);
-        $roles = Role::all();
-        $menus = Menu::all();
-
-        return view('admin.users.admin', compact('admins', 'roles', 'menus'));
-    }
 }

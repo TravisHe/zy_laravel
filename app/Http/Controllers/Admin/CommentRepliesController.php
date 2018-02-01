@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Comment;
 use App\User;
 use App\Menu;
+use App\Role;
 use App\CommentReply;
 
 class CommentRepliesController extends Controller
@@ -23,7 +24,8 @@ class CommentRepliesController extends Controller
     {
         $comment_replies = CommentReply::paginate(8);;
         $menus = Menu::all();
-        return view('admin/comments/replies', compact('comment_replies', 'menus'));
+        $roles = Role::all();
+        return view('admin/comments/replies', compact('comment_replies', 'menus', 'roles'));
     }
 
     /**
@@ -80,9 +82,10 @@ class CommentRepliesController extends Controller
     public function edit($id)
     {
         $menus = Menu::all();
+        $roles = Role::all();
         $comment_reply = CommentReply::findOrFail($id);
 
-        return view('admin/comments/reply_edit', compact('comment_reply', 'menus'));
+        return view('admin/comments/reply_edit', compact('comment_reply', 'menus', 'roles'));
     }
 
     /**

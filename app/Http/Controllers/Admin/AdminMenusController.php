@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 
 use App\Menu;
+use App\Role;
 
 use App\Http\Requests\AdminMenusRequest;
 use App\Http\Requests;
@@ -20,9 +21,10 @@ class AdminMenusController extends Controller
      */
     public function index()
     {
-        $menus = Menu::all();
+        $menus = Menu::paginate(8);
+        $roles = Role::all();
 
-        return view('admin.categories.menus.index', compact('menus'));
+        return view('admin.categories.menus.index', compact('menus', 'roles'));
     }
 
     /**
@@ -45,7 +47,7 @@ class AdminMenusController extends Controller
     {
         Menu::create($request->all());
         Session::flash('success', '主分类创建成功。');
-        return redirect('/zen/menus');
+        return redirect()->route('admin.menus.index');
     }
 
     /**
@@ -69,8 +71,9 @@ class AdminMenusController extends Controller
     {
         $menu = Menu::findOrFail($id);
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.categories.menus.edit', compact('menu', 'menus'));
+        return view('admin.categories.menus.edit', compact('menu', 'menus', 'roles'));
     }
 
     /**
@@ -89,7 +92,7 @@ class AdminMenusController extends Controller
           return redirect()->back();
         } else {
           Session::flash('info', '主分类修改成功。');
-          return redirect('/zen/menus');
+          return redirect()->route('admin.menus.index');
         }
     }
 
@@ -103,6 +106,6 @@ class AdminMenusController extends Controller
     {
         Menu::findOrFail($id)->delete();
         Session::flash('danger', '主分类删除成功。');
-        return redirect('/zen/menus');
+        return redirect()->route('admin.menus.index');
     }
 }

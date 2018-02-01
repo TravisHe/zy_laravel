@@ -12,6 +12,7 @@ use App\Menu;
 use App\ProductColor;
 use App\ProductSize;
 use App\ProductMaterial;
+use App\Role;
 
 use App\Http\Requests\AdminProductDetailsRequest;
 use App\Http\Requests;
@@ -31,9 +32,10 @@ class ProductDetailsController extends Controller
         $product_sizes = ProductSize::all();
         $product_materials = ProductMaterial::all();
         $menus = Menu::all();
+        $roles = Role::all();
 
         return view('admin.products.detail.index', compact('products', 'products_main', 'product_colors',
-                    'product_sizes', 'product_materials','menus'));
+                    'product_sizes', 'product_materials','menus', 'roles'));
     }
 
     /**
@@ -47,10 +49,11 @@ class ProductDetailsController extends Controller
         $product_sizes = ProductSize::where('menu_id', $id)->get();
         $product_materials = ProductMaterial::where('menu_id', $id)->get();
         $menus = Menu::all();
+        $roles = Role::all();
         $menu = Menu::where('id', $id)->first();
 
         return view('admin.products.detail.products', compact('products', 'products_main', 'product_colors',
-                    'product_sizes', 'product_materials','menus', 'menu'));
+                    'product_sizes', 'product_materials','menus', 'menu', 'roles'));
     }
 
     /**
@@ -119,9 +122,10 @@ class ProductDetailsController extends Controller
         $product_sizes = ProductSize::where('menu_id', $menu_id)->get();
         $product_materials = ProductMaterial::where('menu_id', $menu_id)->get();
         $menus = Menu::all();
+        $roles = Role::all();
 
         return view('admin.products.detail.edit', compact('product', 'products_main', 'product_colors',
-                    'product_sizes', 'product_materials','menus', 'color', 'size', 'material', 'price'));
+                    'product_sizes', 'product_materials','menus', 'color', 'size', 'material', 'price', 'roles'));
     }
 
     /**
@@ -142,7 +146,7 @@ class ProductDetailsController extends Controller
             $name = $products->name;
             $input['name'] = $name;
         }
-        
+
         $product->update($input);
 
         $errors = Session::get('errors');

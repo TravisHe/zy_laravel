@@ -18,18 +18,37 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/user/logout', 'Auth\LoginController@logoutUser')->name('user.logout');
 
-Route::group(['middleware'=>'admin', 'as'=>'admin.'], function(){
+Route::group(['prefix' => 'ZanYiuAdminCenter'], function(){
+    Route::get('/login', 'AuthAdmin\LoginController@showLoginForm')->name('admin.login');
+    Route::post('/login', 'AuthAdmin\LoginController@login')->name('admin.login.submit');
+    Route::get('/', 'AdminController@index')->name('admin.home');
+    Route::get('/logout', 'AuthAdmin\LoginController@logout')->name('admin.logout');
+    Route::get('/password/reset', 'AuthAdmin\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
+    Route::post('/password/email', 'AuthAdmin\ForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
+    Route::get('/password/reset/{token}', 'AuthAdmin\ResetPasswordController@showResetForm')->name('admin.password.reset');
+    Route::post('/password/reset', 'AuthAdmin\ResetPasswordController@reset');
+});
+
+Route::group(['middleware'=>'admin', 'as'=>'admin.', 'prefix' => 'ZanYiuAdminCenter'], function(){
 
     Route::get('/zen', 'Admin\AdminDashboardController@index')->name('dashboard');
 
+    // Product menus and submenus inside admin center
     Route::resource('/zen/menus', 'Admin\AdminMenusController');
     Route::resource('/zen/maincategories', 'Admin\AdminMaincategoriesController');
     Route::resource('/zen/subcategories', 'Admin\AdminSubcategoriesController');
 
-    Route::get('/zan/users/vip', 'Admin\AdminUsersController@vip')->name('users.vips');
-    Route::get('/zan/users/admin', 'Admin\AdminUsersController@admin')->name('users.admins');
-    Route::resource('/zen/users', 'Admin\AdminUsersController');
+    // Admins|job titles && users|roles routes inside admin center
+    Route::get('/zen/role/{id}/users', [
+        'as' => 'users.roles',
+        'uses' => 'Admin\AdminUsersController@roles'
+    ]);
+    Route::resource('zen/users', 'Admin\AdminUsersController');
+    Route::resource('zen/roles', 'Admin\AdminRolesController');
+    Route::resource('zen/admins', 'Admin\AdminManagersController');
+    Route::resource('zen/jobs', 'Admin\AdminJobsController');
 
     Route::resource('/zen/products/colors', 'Products\ProductColorsController');
     Route::resource('/zen/products/sizes', 'Products\ProductSizesController');
@@ -40,10 +59,10 @@ Route::group(['middleware'=>'admin', 'as'=>'admin.'], function(){
     Route::resource('/zen/manufactors', 'Admin\ManufactorController');
 
     Route::get('/zen/menu/{id}/products', [
-        'as' => 'products_main.index',
-        'uses' => 'Admin\ProductsController@index'
+        'as' => 'products_main.products',
+        'uses' => 'Admin\ProductsController@products'
     ]);
-    Route::resource('zen/products_main', 'Admin\ProductsController', ['except' => 'index']);
+    Route::resource('zen/products_main', 'Admin\ProductsController');
 
     Route::get('/zen/menu/{id}/product_details', [
         'as' => 'products_detail.products',

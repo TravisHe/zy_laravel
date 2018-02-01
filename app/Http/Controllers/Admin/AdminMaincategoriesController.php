@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 
 use App\Menu;
+use App\Role;
 use App\Maincategory;
 
 use App\Http\Requests\AdminMaincategoriesRequest;
@@ -23,8 +24,9 @@ class AdminMaincategoriesController extends Controller
     {
         $maincategories = Maincategory::paginate(8);
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.categories.maincategories.index', compact('maincategories', 'menus'));
+        return view('admin.categories.maincategories.index', compact('maincategories', 'menus', 'roles'));
     }
 
     /**
@@ -57,7 +59,7 @@ class AdminMaincategoriesController extends Controller
 
         Session::flash('success', '一级分类创建成功。');
 
-        return redirect('/zen/maincategories');
+        return redirect()->route('admin.maincategories.index');
     }
 
     /**
@@ -80,9 +82,10 @@ class AdminMaincategoriesController extends Controller
     public function edit($id)
     {
         $menus = Menu::all();
+        $roles = Role::all();
         $maincategory = Maincategory::findOrFail($id);
 
-        return view('admin.categories.maincategories.edit', compact('maincategory', 'menus'));
+        return view('admin.categories.maincategories.edit', compact('maincategory', 'menus', 'roles'));
     }
 
     /**
@@ -92,12 +95,14 @@ class AdminMaincategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AdminMaincategoriesRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $input = $request->all();
         $maincategory = Maincategory::findOrFail($id);
         if($file = $request->file('icon')) {
-            unlink(public_path() . '/images/icons/' . $maincategory->icon);
+            if(!is_null($maincategory->icon)) {
+                unlink(public_path() . '/images/icons/' . $maincategory->icon);
+            }
             $name = time() . $file->getClientOriginalName();
             $file->move('images/icons', $name);
             $input['icon'] = $name;
@@ -108,7 +113,7 @@ class AdminMaincategoriesController extends Controller
           return redirect()->back();
         } else {
           Session::flash('info', '一级分类修改成功。');
-          return redirect('/zen/maincategories');
+          return redirect()->route('admin.maincategories.index');
         }
     }
 
@@ -128,6 +133,6 @@ class AdminMaincategoriesController extends Controller
 
         Session::flash('success', '一级分类删除成功。');
 
-        return redirect('/zen/maincategories');
+        return redirect()->route('admin.maincategories.index');
     }
 }

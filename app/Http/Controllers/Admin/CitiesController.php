@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Country;
 use App\City;
 use App\Menu;
+use App\Role;
 
 class CitiesController extends Controller
 {
@@ -22,8 +23,9 @@ class CitiesController extends Controller
         $cities = City::paginate(8);
         $countries = Country::all();
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.locations.cities', compact('cities', 'countries', 'menus'));
+        return view('admin.locations.cities', compact('cities', 'countries', 'menus', 'roles'));
     }
 
     /**
@@ -46,7 +48,7 @@ class CitiesController extends Controller
     {
         City::create($request->all());
         Session::flash('success', '城市添加成功。');
-        return redirect('/zen/locations/cities');
+        return redirect()->route('admin.cities.index');
     }
 
     /**
@@ -71,8 +73,9 @@ class CitiesController extends Controller
         $city = City::findOrFail($id);
         $countries = Country::all();
         $menus = Menu::all();
+        $roles = Role::all();
 
-        return view('admin.locations.city_edit', compact('city', 'countries', 'menus'));
+        return view('admin.locations.city_edit', compact('city', 'countries', 'menus', 'roles'));
     }
 
     /**
@@ -91,7 +94,7 @@ class CitiesController extends Controller
           return redirect()->back();
         } else {
           Session::flash('info', '城市修改成功。');
-          return redirect('/zen/locations/cities');
+          return redirect()->route('admin.cities.index');
         }
     }
 
@@ -105,6 +108,6 @@ class CitiesController extends Controller
     {
         City::findOrFail($id)->delete();
         Session::flash('danger', '城市删除成功。');
-        return redirect('/zen/locations/cities');
+        return redirect()->route('admin.cities.index');
     }
 }
